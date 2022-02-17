@@ -1,0 +1,116 @@
+
+--
+-- База данных: `rardrepi_muivmodul`
+--
+-- --------------------------------------------------------
+--
+-- Структура таблицы `stat_admin_sections`
+--
+CREATE TABLE `stat_admin_sections` (
+  `otchet` mediumint(8) NOT NULL,
+  `users` varchar(255) NOT NULL DEFAULT '',
+  `filtr` varchar(255) NOT NULL DEFAULT '',
+  `pravila` varchar(255) NOT NULL DEFAULT '',
+  `dns` varchar(255) NOT NULL DEFAULT '',
+  `tracert` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+--
+-- Дамп данных таблицы `stat_admin_sections`
+--
+INSERT INTO `stat_admin_sections` (`otchet`, `users`, `filtr`, `pravila`, `dns`, `tracert`) VALUES
+(1, 'otchet', 'Статистика-Отчет', 'Демонтрация отчета по пользователям', 'otchet.png', '1'),
+(2, 'users', 'Пользователи', 'пользователи модуля СВТ', 'users.png', '1'),
+(3, 'filtr', 'Фильтры', 'Фильтры трафика', 'filtr.png', '1'),
+(4, 'pravila', 'Правила', 'Правила и запреты посещения сайтов', 'pravila.png', '1'),
+(5, 'dns', 'DNS-сервер', 'база DNS серверов', 'dns.png', '1'),
+(6, 'tracert', 'Маршруты', 'Маршруты в глобальной сети, проверка VPN', 'tracert.png', '1');
+-- --------------------------------------------------------
+--
+-- Структура таблицы `stat_otchet`
+--
+CREATE TABLE `stat_otchet` (
+  `datas` int(5) NOT NULL,
+  `fio` smallint(5) NOT NULL DEFAULT '0',
+  `url` smallint(5) NOT NULL DEFAULT '1',
+  `iphost` int(50) NOT NULL DEFAULT '',
+  `trafisx` int(50) NOT NULL DEFAULT '',
+  `trafvxod` int(200) NOT NULL DEFAULT '',
+  `conect` int(50) NOT NULL DEFAULT '',
+  `maksprocent` int(200) NOT NULL DEFAULT '',
+  `prinyato` int(10) NOT NULL DEFAULT '',
+  `peredano` int(10) NOT NULL DEFAULT '',
+  `istochnik` varchar(4) NOT NULL DEFAULT '',
+  `rezultat` int(5) NOT NULL DEFAULT '0'
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+--
+-- Дамп данных таблицы `stat_otchet`
+--
+INSERT INTO `stat_category` (`datas`, `fio`, `url`, `iphost`, `trafisx`, `trafvxod`, `conect`, `maksprocent`, `prinyato`, `peredano`, `istochnik`, `rezultat`) VALUES
+('01.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '2', '10', '', 10, '', '', ''),
+('02.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '3', '10', '', 10, '', '', ''),
+('03.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '2', '10', '', 10, '', '', ''),
+('04.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '1', '10', '', 10, '', '', ''),
+('05.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '23', '10', '', 10, '', '', ''),
+('06.02.2022', 'Попов Игорь Игоревич', 'ya.ru', '192.168.1.12', '12', '3', '10', '', 10, '', '', ''),
+;
+-- --------------------------------------------------------
+--
+-- Структура таблицы `stat_filtr`
+--
+CREATE TABLE `stat_filtr` (
+  `idgroupe` int(11) NOT NULL,
+  `types` varchar(11) NOT NULL DEFAULT '0',
+  `ip` int(40) NOT NULL DEFAULT '',
+  `hostname` varchar(50) NOT NULL DEFAULT '',
+  `protocol` int(11) NOT NULL DEFAULT '0',
+  `hash_port` varchar(32) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+
+--
+-- Дамп данных таблицы `stat_filtr`
+--
+
+INSERT INTO `stat_filtr` (`idgroupe`, `types`, `ip`, `hostname`, `protocol`, `hash_port`) VALUES
+(1, Развлечение, '192.168.1.1', 'vk.ru', 1, '92e143e7d642668s094c824b39c193909'),
+(2, Новости, '192.168.1.2', 'instagram.com', 2, '36c4ec1c235fb561d23287790f42bf158'),
+(3, Игры, '192.168.1.3', 'ok.ru', 3, '0e75f49c7a8deba20d077412ed23e0759'),
+(4, Музыка, '192.168.1.4', 'youtube.com', 4, '9d5596e6b1ebes3f98b7967250213b351');
+
+-- --------------------------------------------------------
+--
+-- Структура таблицы `stat_pravila`
+--
+CREATE TABLE `stat_usergroups` (
+  `type_id` smallint(5) NOT NULL,
+  `group_pravila` varchar(32) NOT NULL DEFAULT '',
+  `istochnik` text NOT NULL,
+  `asource` tinyint(1) NOT NULL DEFAULT '1',
+  `trafic` text NOT NULL,
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+--
+-- Дамп данных таблицы `stat_stat_pravila`
+--
+INSERT INTO `stat_usergroups` (`type_id`, `group_pravila`, `istochnik`, `asource`, `trafic`) VALUES
+(1, 'Обновление', 'all', 1, 'all'),
+(2, 'Скачивание', 'all', 1, 'all'),
+(3, 'Перенаправление', 'all', 1, 'all'),
+(4, 'Заглушка', 'all', 1, 'all'),
+(5, 'Закрыт доступ', 'all', 0, 'all');
+-- --------------------------------------------------------
+--
+-- Структура таблицы `stat_users`
+--
+CREATE TABLE `stat_users` (
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(32) NOT NULL DEFAULT '',
+  `name` varchar(40) NOT NULL DEFAULT '',
+  `user_id` mediumint(8) NOT NULL,
+  `news_num` smallint(6) NOT NULL DEFAULT '0',
+  `comm_num` mediumint(8) NOT NULL DEFAULT '0',
+  `user_group` smallint(5) NOT NULL DEFAULT '4',
+) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
+--
+-- Дамп данных таблицы `stat_users`
+--
+INSERT INTO `stat_users` (`email`, `password`, `name`, `user_id`, `news_num`, `comm_num`, `user_group`) VALUES
+('admin@statmuiv.ru', '299057e9eff1da63cb33c60c6e4fb69a', 'statmuiv', 1, 88, 65, 1, '1644058164');
